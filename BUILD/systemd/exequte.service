@@ -1,0 +1,27 @@
+[Install]
+Description=MQTT remote control
+After=network.target
+
+[Unit]
+Type=simple
+ExecStart=/usr/bin/exequte
+User=exequte
+#ProtectSystem=strict
+#PrivateTmp=yes
+#ProtectHome=yes
+#PrivateDevices=yes
+#NoNewPrivileges=yes
+#RestrictNamespaces=yes
+#ProtectControlGroups=yes
+#ProtectKernelModules=yes
+#ProtectKernelTunables=yes
+#ProtectHostname=yes
+#RestrictRealtime=yes
+#ProtectKernelLogs=yes
+#ProtectClock=yes
+#SystemCallArchitectures=native
+#LockPersonality=yes
+#MemoryDenyWriteExecute=yes
+
+[Install]
+WantedBy=multi-user.target

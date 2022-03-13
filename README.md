@@ -1,3 +1,5 @@
-# ExeQute
+# exeQute
 
-A simple background service to remotely control your device through MQTT written in Go. Supports Windows, Linux, OS X.
+A simple modular cross-platform background service to remotely control your device via MQTT writen in Go.
+
+> This is still a work in progress. However, it is possible to compile for various platforms and use regularly. Documentation soon.

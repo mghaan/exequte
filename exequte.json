@@ -1,0 +1,54 @@
+{
+    "system": {
+        "debug": false,
+        "log": ""
+    },
+    "mqtt": {
+        "host": "127.0.0.1",
+        "port": 1883,
+        "ssl": false,
+        "username": "mqtt",
+        "password": "secret",
+        "client": "exequte"
+    },
+    "plugins": [
+        {
+            "plugin": "dummy.so"
+        },
+        {
+            "plugin": "run",
+            "config": [
+                {
+                    "alias": "ping",
+                    "script": "/usr/bin/ping 127.0.0.1",
+                    "params": false
+                },
+                {
+                    "alias": "pong",
+                    "script": "/usr/bin/ping",
+                    "params": true
+                }
+            ]
+        },
+        {
+            "plugin": "alive",
+            "config": [
+                {
+                    "interval": 10,
+                    "topic": "terminal",
+                    "process": "xterm"
+                }
+            ]
+        },
+        {
+            "plugin": "status",
+            "config": [
+                {
+                    "interval": 10,
+                    "topic": "temp",
+                    "process": "/usr/local/mqtt/reports.sh"
+                }
+            ]
+        }
+    ]
+}
