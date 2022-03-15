@@ -36,7 +36,7 @@ func (plugin *External) Register(data json.RawMessage, server *app.Server) bool 
 		if len(message.Payload()) > 0 {
 			payload := string(message.Payload())
 
-			server.Log().Info(PLUGIN, "Received command: "+payload)
+			server.Log().Info(PLUGIN, fmt.Sprintf("Received command: %s", payload))
 
 			// parse payload
 			datas := strings.Split(payload, " ")
@@ -67,7 +67,7 @@ func (plugin *External) Register(data json.RawMessage, server *app.Server) bool 
 								}
 							}
 
-							server.Log().Info(PLUGIN, "Run alias '"+commands[c].Alias+"': "+strings.Join(cmd.Args, " "))
+							server.Log().Info(PLUGIN, fmt.Sprintf("Run alias '%s': %s", commands[c].Alias, strings.Join(cmd.Args, " ")))
 							cmd.Start()
 						}
 					}

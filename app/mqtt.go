@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"time"
 
 	paho "github.com/eclipse/paho.mqtt.golang"
 	"github.com/mghaan/exequte/logger"
@@ -38,17 +39,40 @@ func (server *Server) Connect(ssl bool, host string, port int, clientid string, 
 	server.broker.SetUsername(username)
 	server.broker.SetPassword(password)
 	server.broker.SetWill(clientid+"/online", "0", 0, false)
+	server.broker.SetConnectionLostHandler(server.handlerConnectionLost)
 
 	server.client = paho.NewClient(server.broker)
-	token := server.client.Connect()
-	token.Wait()
-	if err := token.Error(); err != nil {
-		server.logs.Fatal(logger.MQTT, fmt.Sprintf("Connection to %s:%d failed", host, port), err)
+
+	server.handlerConnectionAttempt()
+}
+
+func (server *Server) handlerConnectionLost(client paho.Client, err error) {
+	server.logs.Error(logger.MQTT, "Connection lost", err)
+	server.handlerConnectionAttempt()
+}
+
+func (server *Server) handlerConnectionAttempt() {
+	var err error
+
+	at := 0
+	for {
+		at++
+
+		token := server.client.Connect()
+		token.Wait()
+		if err = token.Error(); err == nil {
+			server.logs.Info(logger.MQTT, fmt.Sprintf("Connected to %s:%s", server.broker.Servers[0].Hostname(), server.broker.Servers[0].Port()))
+			server.Publish("online", "1")
+
+			return
+		}
+
+		if at == 3 {
+			server.logs.Fatal(logger.MQTT, fmt.Sprintf("Connection to %s:%s failed", server.broker.Servers[0].Hostname(), server.broker.Servers[0].Port()), err)
+		}
+
+		time.Sleep(30 * time.Second)
 	}
-
-	server.logs.Info(logger.MQTT, fmt.Sprintf("Connected to %s:%d", host, port))
-
-	server.Publish("online", "1")
 }
 
 // Subscribe to this topic.
