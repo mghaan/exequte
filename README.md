@@ -213,4 +213,5 @@ All configuration is done in the **exequte.json** config file. If you installed 
 These tasks are of no particular priority:
 
 * provide actual binary packages after code stabilization
+* provide installer and service for Windows platform
 * implement HTTP server to ease the configuration process
