@@ -8,13 +8,24 @@ A simple modular cross-platform background service to remotely control your devi
 
 ### Contact
 
-If you have any comments or ideas, you can drop a chat message in [#exequte](https://matrix.to/#/#exequte:matrix.org) via [Matrix](https://www.matrix.org).
+If you have any comments or ideas, you can drop a chat message in [#exequte:matrix.org](https://matrix.to/#/#exequte:matrix.org) via [Matrix](https://www.matrix.org).
 
 ## Requirements
 
 * MQTT server
 
 This program runs on all platforms supported by Go. For conviecence precompiled binary packages are provided for Linux, Windows and OS X.
+
+## Building
+
+You can use **make** to speed up the build process:
+
+    make clean
+    make all
+
+Compile for specific platform (check Makefile for all targets):
+
+    make linux-amd64
 
 ## Installing
 
@@ -196,3 +207,10 @@ All configuration is done in the **exequte.json** config file. If you installed 
             }
         ]
     }
+
+## TODO
+
+These tasks are of no particular priority:
+
+* provide actual binary packages after code stabilization
+* implement HTTP server to ease the configuration process
