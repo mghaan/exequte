@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 	"plugin"
 	"strings"
 
@@ -25,7 +24,7 @@ func LoadLibrary(server *app.Server, plugins []app.Plugin) {
 
 	for _, plugs := range plugins {
 		name := plugs.Plugin
-		if strings.Contains(name, ".") {
+		if strings.Contains(name, ".") || strings.Contains(name, string(os.PathSeparator)) {
 			continue
 		}
 
@@ -52,19 +51,13 @@ func LoadLibrary(server *app.Server, plugins []app.Plugin) {
 
 // Load and activate external plugins.
 func LoadPlugins(server *app.Server, plugins []app.Plugin) {
-	exec, err := os.Executable()
-	if err != nil {
-		server.Log().Error(logger.SYSTEM, "Unexpected error while processing plugins", err)
-		return
-	}
-
 	for _, plugs := range plugins {
 		name := plugs.Plugin
-		if !strings.Contains(name, ".") {
+		if !strings.Contains(name, ".") && !strings.Contains(name, string(os.PathSeparator)) {
 			continue
 		}
 
-		filepath := filepath.Dir(exec) + string(os.PathSeparator) + "plugins" + string(os.PathSeparator) + name
+		filepath := name
 		plug, err := plugin.Open(filepath)
 		if err != nil {
 			server.Log().Error(logger.SYSTEM, fmt.Sprintf("Unable to open plugin '%s'", name), err)

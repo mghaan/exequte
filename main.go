@@ -1,3 +1,6 @@
+//
+// VERSION: 0.1
+//
 package main
 
 import (
