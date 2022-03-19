@@ -1,0 +1,20 @@
+#!/usr/bin/make -f
+
+DESTDIR=debian/exequte
+
+%:
+
+	dh $@ --with=systemd
+
+override_dh_auto_clean:
+override_dh_auto_test:
+override_dh_auto_build:
+override_dh_auto_install:
+	mkdir -p $(DESTDIR)/etc
+	mkdir -p $(DESTDIR)/usr/bin
+	cp exequte.json $(DESTDIR)/etc/exequte.json
+	cp exequte $(DESTDIR)/usr/bin/exequte
+
+override_dh_installinit:
+	dh_systemd_enable -pexequte --name=exequte exequte.service
+	dh_installinit --noscripts

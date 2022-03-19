@@ -1,0 +1,12 @@
+Source: exequte
+Maintainer: Marian Micek <code@ghaan.net>
+Build-Depends: debhelper (>= 10)
+
+Package: exequte
+Architecture: __PKGARCH__
+Section: web
+Priority: optional
+Description: MQTT remote control
+ Simple daemon to control your device remotely via MQTT
+Homepage: https://github.com/mghaan/exequte
+Depends: ${misc:Depends}, ${shlibs:Depends}, adduser

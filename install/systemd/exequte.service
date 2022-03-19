@@ -1,11 +1,12 @@
-[Install]
+[Unit]
 Description=MQTT remote control
 After=network.target
 
-[Unit]
+[Service]
 Type=simple
-ExecStart=/usr/bin/exequte
+ExecStart=/usr/bin/exequte --config /etc/exequte.json
 User=exequte
+Group=exequte
 #ProtectSystem=strict
 #PrivateTmp=yes
 #ProtectHome=yes

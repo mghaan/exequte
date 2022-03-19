@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+    configure)
+        adduser --system --disabled-password --disabled-login --home /var/empty --no-create-home --quiet --force-badname --group exequte
+        ;;
+esac
+
+#DEBHELPER#
+
+exit 0
