@@ -1,3 +1,5 @@
+<img alt="Icon" src="https://raw.githubusercontent.com/mghaan/exequte/master/exequte.svg" width="100" height="100">
+
 [![Chat on Matrix](https://matrix.to/img/matrix-badge.svg)](https://matrix.to/#/#exequte:matrix.org)
 
 # exeQute
