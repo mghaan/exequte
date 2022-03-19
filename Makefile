@@ -1,5 +1,5 @@
 LDFLAGS=-w -s
-PKGVERSION=$(shell cat main.go | grep VERSION | awk '{print $$3}')
+PKGVERSION=$(shell cat main.go | grep VERSION | awk '{print $$5}' | sed 's/"//g')
 PKGDATE=$(shell date -R)
 
 .PHONY: \

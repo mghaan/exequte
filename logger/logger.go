@@ -1,3 +1,18 @@
+/*
+ * Copyright (C) 2022 Marian Micek
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package logger
 
 import (
@@ -22,7 +37,7 @@ type Logger struct {
 	logfile *os.File
 }
 
-// Initialize
+// Initialize.
 func New() *Logger {
 	logger := &Logger{}
 
@@ -40,20 +55,28 @@ func (logger *Logger) Create(path string) error {
 	return err
 }
 
-// Log events
+// Log clean mesage.
+func (logger *Logger) Echo(source string, reason string) {
+	logger.write("", "exeQute", reason, nil)
+}
+
+// Log info message.
 func (logger *Logger) Info(source string, reason string) {
 	logger.write(INFO, source, reason, nil)
 }
 
+// Log error.
 func (logger *Logger) Error(source string, reason string, err error) {
 	logger.write(ERROR, source, reason, err)
 }
 
+// Log error and panic.
 func (logger *Logger) Fatal(source string, reason string, err error) {
 	logger.write(ERROR, source, reason, err)
 	os.Exit(1)
 }
 
+// Write to log file.
 func (logger *Logger) write(category string, source string, reason string, err error) {
 	t := time.Now()
 	stamp := t.Format("02 Jan 2006 15:04:05")
