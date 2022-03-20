@@ -57,7 +57,7 @@ func Configure() (*Config, *logger.Logger) {
 	logs := logger.New()
 
 	var conf string
-	flag.StringVar(&conf, "config", workdir+string(os.PathSeparator)+"exequte.yaml", "path to config file")
+	flag.StringVar(&conf, "config", workdir+string(os.PathSeparator)+"exequte.json", "path to config file")
 	flag.Parse()
 
 	cfg := &Config{}
