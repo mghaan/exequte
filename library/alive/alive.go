@@ -46,14 +46,17 @@ func (plugin *External) Register(data json.RawMessage, server *app.Server) bool 
 	}
 
 	for _, task := range tasks {
+		procName := task.Process
+		topicName := task.Topic
+
 		app.ScheduleTask(task.Interval, func() {
 			ret := -1
 			switch runtime.GOOS {
 			case "linux":
 				ret = proc_check_linux(task.Process)
 			}
-			server.Log().Info(PLUGIN, fmt.Sprintf("Check process '%s'", task.Process))
-			server.Publish("system/alive/"+task.Topic, fmt.Sprintf("%d", ret))
+			server.Log().Info(PLUGIN, fmt.Sprintf("Check process '%s'", procName))
+			server.Publish("system/alive/"+topicName, fmt.Sprintf("%d", ret))
 		})
 	}
 

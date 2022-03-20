@@ -54,6 +54,9 @@ func (plugin *External) Register(data json.RawMessage, server *app.Server) bool 
 			continue
 		}
 
+		procName := task.Process
+		topicName := task.Topic
+
 		app.ScheduleTask(task.Interval, func() {
 			cmd := exec.Command(args[0])
 			if len(args) > 1 {
@@ -73,8 +76,8 @@ func (plugin *External) Register(data json.RawMessage, server *app.Server) bool 
 
 			res = strings.TrimSpace(res)
 
-			server.Log().Info(PLUGIN, fmt.Sprintf("Report '%s'", task.Process))
-			server.Publish("system/status/"+task.Topic, res)
+			server.Log().Info(PLUGIN, fmt.Sprintf("Report '%s'", procName))
+			server.Publish("system/status/"+topicName, res)
 		})
 	}
 
