@@ -13,20 +13,12 @@
     },
     "plugins": [
         {
-            "plugin": "dummy.so"
-        },
-        {
             "plugin": "run",
             "config": [
                 {
                     "alias": "ping",
                     "script": "/usr/bin/ping 127.0.0.1",
                     "params": false
-                },
-                {
-                    "alias": "pong",
-                    "script": "/usr/bin/ping",
-                    "params": true
                 }
             ]
         },
@@ -37,16 +29,6 @@
                     "interval": 10,
                     "topic": "terminal",
                     "process": "xterm"
-                }
-            ]
-        },
-        {
-            "plugin": "status",
-            "config": [
-                {
-                    "interval": 10,
-                    "topic": "temp",
-                    "process": "/usr/local/mqtt/reports.sh"
                 }
             ]
         }
