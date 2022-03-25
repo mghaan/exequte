@@ -58,7 +58,11 @@ func (plugin *External) Register(data json.RawMessage, server *app.Server) bool 
 			for c := 0; c < len(commands); c++ {
 				// check the alias
 				if commands[c].Alias == datas[0] {
-					cmds := strings.Split(commands[c].Script, " ")
+					sep := " "
+					if strings.Contains(commands[c].Script, ";") {
+						sep = ";"
+					}
+					cmds := strings.Split(commands[c].Script, sep)
 					if finfo, err := os.Stat(cmds[0]); err != nil {
 						server.Log().Info(PLUGIN, fmt.Sprintf("%s: No such file or directory", commands[c].Alias))
 					} else {
