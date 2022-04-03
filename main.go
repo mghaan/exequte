@@ -41,12 +41,8 @@ func main() {
 	// main loop
 	sigc := make(chan os.Signal, 1)
 	signal.Notify(sigc, os.Interrupt, syscall.SIGTERM)
-	go func() {
-		<-sigc
-		mqtt.Disconnect()
-		logs.Info(log.SYSTEM, "Terminated")
-		os.Exit(0)
-	}()
-
-	select {}
+	<-sigc
+	mqtt.Disconnect()
+	logs.Info(log.SYSTEM, "Terminated")
+	os.Exit(0)
 }
