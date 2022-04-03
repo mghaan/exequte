@@ -16,6 +16,6 @@ Run, %A_ScriptDir%\exequte.exe, %A_ScriptDir%, Hide, procExe
 return
 
 handlerExit:
-Process, Close, %procExe%
+WinKill, ahk_pid %procExe%
 ExitApp
 return
