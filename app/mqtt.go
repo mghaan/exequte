@@ -69,6 +69,7 @@ func (server *Server) handlerConnectionLost(client paho.Client, err error) {
 func (server *Server) handlerConnectionAttempt() {
 	var err error
 
+	atmax := 3
 	at := 0
 	for {
 		at++
@@ -82,8 +83,10 @@ func (server *Server) handlerConnectionAttempt() {
 			return
 		}
 
-		if at == 3 {
-			server.logs.Fatal(logger.MQTT, fmt.Sprintf("Connection to %s:%s failed", server.broker.Servers[0].Hostname(), server.broker.Servers[0].Port()), err)
+		server.logs.Error(logger.MQTT, fmt.Sprintf("Connection to %s:%s failed (%d/%d)", server.broker.Servers[0].Hostname(), server.broker.Servers[0].Port(), at, atmax), token.Error())
+
+		if at == atmax {
+			server.logs.Fatal(logger.MQTT, "Unable to connect to MQTT server", token.Error())
 		}
 
 		time.Sleep(30 * time.Second)
