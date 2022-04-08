@@ -54,15 +54,19 @@ func (plugin *External) Register(data json.RawMessage, server *app.Server) bool 
 			server.Log().Info(PLUGIN, fmt.Sprintf("Received command: %s", payload))
 
 			// parse payload
-			datas := strings.Split(payload, " ")
+			seppay := " "
+			if strings.Contains(payload, "|") {
+				seppay = "|"
+			}
+			datas := strings.Split(payload, seppay)
 			for c := 0; c < len(commands); c++ {
 				// check the alias
 				if commands[c].Alias == datas[0] {
-					sep := " "
-					if strings.Contains(commands[c].Script, ";") {
-						sep = ";"
+					sepali := " "
+					if strings.Contains(commands[c].Script, "|") {
+						sepali = "|"
 					}
-					cmds := strings.Split(commands[c].Script, sep)
+					cmds := strings.Split(commands[c].Script, sepali)
 					if finfo, err := os.Stat(cmds[0]); err != nil {
 						server.Log().Info(PLUGIN, fmt.Sprintf("%s: No such file or directory", commands[c].Alias))
 					} else {
@@ -81,7 +85,7 @@ func (plugin *External) Register(data json.RawMessage, server *app.Server) bool 
 							if commands[c].Params {
 								if len(datas) > 1 {
 									for i := 1; i < len(datas); i++ {
-										cmd.Args = append(cmd.Args, datas[i])
+										cmd.Args = append(cmd.Args, "\""+datas[i]+"\"")
 									}
 								}
 							}
